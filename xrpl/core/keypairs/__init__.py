@@ -21,9 +21,9 @@ else:
         from Crypto.Hash import RIPEMD
         ripemd160 = lambda x: RIPEMD.new(x).digest()
     except ImportError:
-        raise ImportError, """Your OpenSSL implementation does not include the RIPEMD160 """
-                           """algorithm, which is required by XRPL, or python-crypto """
-                           """needs installing"""
+        raise ImportError("""Your OpenSSL implementation does not include the RIPEMD160 """
+                          """algorithm, which is required by XRPL, or pycrypto """
+                          """needs installing""")
 
 __all__ = [
     "derive_classic_address",
