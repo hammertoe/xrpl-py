@@ -13,10 +13,17 @@ from xrpl.core.keypairs.main import (
     sign,
 )
 
-assert (
-    "ripemd160" in algorithms_available
-), """Your OpenSSL implementation does not include the RIPEMD160 algorithm,
-    which is required by XRPL"""
+
+if "ripemd160" in algorithms_available:
+    ripemd160 = lambda x: hashlib.new("ripemd160", x).digest()
+else:
+    try:
+        from Crypto.Hash import RIPEMD
+        ripemd160 = lambda x: RIPEMD.new(x).digest()
+    except ImportError:
+        raise ImportError, """Your OpenSSL implementation does not include the RIPEMD160 """
+                           """algorithm, which is required by XRPL, or python-crypto """
+                           """needs installing"""
 
 __all__ = [
     "derive_classic_address",
@@ -25,4 +32,5 @@ __all__ = [
     "is_valid_message",
     "sign",
     "XRPLKeypairsException",
+    "ripemd160",
 ]

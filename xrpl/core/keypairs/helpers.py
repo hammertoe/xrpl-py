@@ -1,5 +1,6 @@
 """Miscellaneous functions that are private to xrpl.core.keypairs."""
 import hashlib
+from xrpl.core.keypairs import ripemd160
 
 
 def sha512_first_half(message: bytes) -> bytes:
@@ -28,4 +29,4 @@ def get_account_id(public_key: bytes) -> bytes:
         The account ID for the given public key.
     """
     sha_hash = hashlib.sha256(public_key).digest()
-    return hashlib.new("ripemd160", sha_hash).digest()
+    return ripemd160(sha_hash)
