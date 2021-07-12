@@ -28,4 +28,6 @@ def generate_faucet_wallet(
 
     .. # noqa: DAR402 exception raised in private method
     """
-    return asyncio.run(async_generate_faucet_wallet(client, wallet, debug))
+    loop = asyncio.get_event_loop()
+    return loop.run_until_complete(async_generate_faucet_wallet(client, wallet, debug))
+
